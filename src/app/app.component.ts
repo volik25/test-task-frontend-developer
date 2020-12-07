@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { StatusValue } from './models/models';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'test-task-frontend-developer';
+  constructor(private modalService: NgbModal) {
+
+  }
+
+  public modalOpen() {
+    const modalRef = this.modalService.open(UserFormComponent);
+  }
+  
 }

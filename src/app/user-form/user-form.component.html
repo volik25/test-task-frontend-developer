@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Добавить пользователя</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Отклонено')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input [ngClass]="{'border-danger': (f.email.dirty && f.email.errors)}" formControlName="email" type="email"
+                class="form-control" id="email" placeholder="Email пользователя">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="password">Пароль</label>
+                <input [ngClass]="{'border-danger': (f.password.dirty && f.password.errors)}" formControlName="password"
+                    type="password" class="form-control" id="password" placeholder="Пароль пользователя">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="phone">Телефон</label>
+                <input [ngClass]="{'border-danger': (f.phone.dirty && f.phone.errors)}" formControlName="phone"
+                    type="tel" class="form-control" id="phone" placeholder="Телефон пользователя">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="lastName">Фамилия</label>
+                <input [ngClass]="{'border-danger': (f.lastName.dirty && f.lastName.errors)}" formControlName="lastName"
+                    type="text" class="form-control" id="lastName" placeholder="Фамилия пользователя">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="firstName">Имя</label>
+                <input [ngClass]="{'border-danger': (f.firstName.dirty && f.firstName.errors)}"
+                    formControlName="firstName" type="text" class="form-control" id="firstName"
+                    placeholder="Имя пользователя">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="middleName">Отчество (при наличии)</label>
+                <input formControlName="middleName" type="text" class="form-control" id="middleName"
+                    placeholder="Отчество пользователя">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="status">Статус</label>
+                <select [ngClass]="{'border-danger': (f.status.dirty && f.status.errors)}" formControlName="status"
+                    class="form-control" id="status">
+                    <option *ngFor="let status of statuses" [value]="status.type">{{status.value}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveUser()">Сохранить</button>
+</div>
