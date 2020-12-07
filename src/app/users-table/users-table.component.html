@@ -1,22 +1,33 @@
-<!-- <table class="table table-striped">
+<button class="btn btn-primary" (click)="modalOpen()">Добавить пользователя</button>
+<table class="mx-5">
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Country</th>
-            <th scope="col">Area</th>
-            <th scope="col">Population</th>
+            <th *ngFor="let header of headers" scope="col">{{header}}</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let country of countries; index as i">
-            <th scope="row">{{ i + 1 }}</th>
-            <td>
-                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
-                    style="width: 20px">
-                {{ country.name }}
+        <tr *ngFor="let user of savedUsers; index as i">
+            <th scope="row" class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-link far fa-edit" (click)="modalOpen(user)"></button>
+                {{ i + 1 }}
+            </th>
+            <td>{{user.email}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.middleName ? user.middleName : 'Не указано'}}</td>
+            <td>{{user.status | StatusesPipe}}</td>
+            <td>{{user.createDate}}</td>
+            <td>{{user.lastChangeDate}}</td>
+            <td class="d-flex justify-content-start align-items-center">
+                <button class="btn btn-danger far fa-trash-alt" (click)="deleteUser(i)"></button>
             </td>
-            <td>{{ country.area | number }}</td>
-            <td>{{ country.population | number }}</td>
         </tr>
     </tbody>
-</table> -->
+</table>
+
+<div class="alerts">
+  <ngb-alert #alertDiv *ngIf="alert?.message" [type]="alert.type" (closed)="alert.message = ''">{{ alert.message }}</ngb-alert>
+</div>

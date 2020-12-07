@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StatusValue, User } from '../models/models';
@@ -9,6 +9,7 @@ import { StatusValue, User } from '../models/models';
   styleUrls: ['./user-form.component.less']
 })
 export class UserFormComponent implements OnInit {
+  @Input() user: User | null = null;
   public userForm!: FormGroup;
   public statuses = StatusValue;
   private users: User[] = [];
@@ -22,11 +23,13 @@ export class UserFormComponent implements OnInit {
     else {
       this.users = JSON.parse(users);
     }
-    console.log(this.users);
     
   }
 
   ngOnInit(): void {
+    if (this.user) {
+      this.userForm.patchValue(this.user);
+    }
   }
 
   private _initForm(){
@@ -55,17 +58,31 @@ export class UserFormComponent implements OnInit {
       return;
     }
     let user = this.userForm.getRawValue();
-    for (let i = 0; i < this.users.length; i++) {
-      const saveUser = this.users[i];
-      if (user.email == saveUser.email) {
-        return;
-      }
+    // for (let i = 0; i < this.users.length; i++) {
+    //   const saveUser = this.users[i];
+    //   if (user.email == saveUser.email) {
+    //     return;
+    //   }
+    // }
+    let result = '';
+    if (this.user) {
+      user["lastChangeDate"] = new Date(Date.now()).toLocaleString();
+      let i = this.users.findIndex(x => x.email === this.user?.email);
+      let createDate = this.users[i].createDate;
+      user["createDate"] = createDate;
+      this.users[i] = user;
+      result = 'Пользователь обновлен';
     }
-    user["createDate"] = new Date(Date.now()).toLocaleString();
-    user["lastChangeDate"] = new Date(Date.now()).toLocaleString();
-    this.users.push(user);
+    else{
+      user["createDate"] = new Date(Date.now()).toLocaleString();
+      user["lastChangeDate"] = new Date(Date.now()).toLocaleString();
+      this.users.push(user);
+      result = 'Пользователь добавлен';
+    }
     localStorage.setItem('users', JSON.stringify(this.users));
-    this.activeModal.close('Пользователь добавлен');
+    this.activeModal.close({
+      message: result,
+      data: this.users});
   }
 
   

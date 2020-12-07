@@ -11,9 +11,9 @@ export interface User {
 }
 
 export enum Statuses {
-    Client,
-    Partner,
-    Admin
+    Client = '0',
+    Partner = '1',
+    Admin = '2'
 }
 
 interface EnumValues {
@@ -35,3 +35,20 @@ export const StatusValue: EnumValues[] = [
         value: 'Партнер'
     }
 ]
+
+export const headers: string[] = [
+    'Email',
+    'Пароль',
+    'Телефон',
+    'Фамилия',
+    'Имя',
+    'Отчество',
+    'Статус',
+    'Дата создания записи',
+    'Дата последнего редактирования'
+]
+
+export interface Alert {
+  type: string;
+  message: string;
+}
