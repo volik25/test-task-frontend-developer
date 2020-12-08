@@ -10,17 +10,20 @@
             <label for="email">Email</label>
             <input [ngClass]="{'border-danger': (f.email.dirty && f.email.errors)}" formControlName="email" type="email"
                 class="form-control" id="email" placeholder="Email пользователя">
+            <small class="text-danger" *ngIf="duplicated">Пользователь с таким email уже существует</small>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="password">Пароль</label>
                 <input [ngClass]="{'border-danger': (f.password.dirty && f.password.errors)}" formControlName="password"
                     type="password" class="form-control" id="password" placeholder="Пароль пользователя">
+                <small class="text-danger" *ngIf="(f.password.dirty && f.passworderrors)">Введите пароль</small>
             </div>
             <div class="form-group col-md-6">
                 <label for="phone">Телефон</label>
                 <input [ngClass]="{'border-danger': (f.phone.dirty && f.phone.errors)}" formControlName="phone"
                     type="tel" class="form-control" id="phone" placeholder="Телефон пользователя">
+                <small class="text-danger" *ngIf="(f.phone.dirty && f.phone.errors)">Введите корректный номер телефона</small>
             </div>
         </div>
         <div class="form-row">
@@ -28,12 +31,14 @@
                 <label for="lastName">Фамилия</label>
                 <input [ngClass]="{'border-danger': (f.lastName.dirty && f.lastName.errors)}" formControlName="lastName"
                     type="text" class="form-control" id="lastName" placeholder="Фамилия пользователя">
+                <small class="text-danger" *ngIf="(f.lastName.dirty && f.lastName.errors)">Введите фамилию</small>
             </div>
             <div class="form-group col-md-6">
                 <label for="firstName">Имя</label>
                 <input [ngClass]="{'border-danger': (f.firstName.dirty && f.firstName.errors)}"
                     formControlName="firstName" type="text" class="form-control" id="firstName"
                     placeholder="Имя пользователя">
+                <small class="text-danger" *ngIf="(f.firstName.dirty && f.firstName.errors)">Введите имя</small>
             </div>
         </div>
         <div class="form-row">
@@ -48,6 +53,7 @@
                     class="form-control" id="status">
                     <option *ngFor="let status of statuses" [value]="status.type">{{status.value}}</option>
                 </select>
+                <small class="text-danger" *ngIf="(f.status.dirty && f.status.errors)">Укажите статус</small>
             </div>
         </div>
     </form>

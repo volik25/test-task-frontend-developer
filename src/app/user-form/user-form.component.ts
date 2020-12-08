@@ -12,6 +12,7 @@ export class UserFormComponent implements OnInit {
   @Input() user: User | null = null;
   public userForm!: FormGroup;
   public statuses = StatusValue;
+  public duplicated: boolean = false;
   private users: User[] = [];
   private phonePattern: string = '^((8|\\+7)[\- ]?)?(\\(?\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$';
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
@@ -42,6 +43,18 @@ export class UserFormComponent implements OnInit {
       middleName: [null],
       status: [null, Validators.required]
     })
+    this.userForm.get('email')?.valueChanges.subscribe(value => {
+      for (let i = 0; i < this.users.length; i++) {
+        const user = this.users[i];
+        if ((user.email.indexOf(value) +1) && user.email != this.user?.email) {
+          this.duplicated = true;
+          break;
+        }
+        else{
+          this.duplicated = false;
+        }
+      }
+    })
   }
 
   public saveUser() {
@@ -58,12 +71,10 @@ export class UserFormComponent implements OnInit {
       return;
     }
     let user = this.userForm.getRawValue();
-    // for (let i = 0; i < this.users.length; i++) {
-    //   const saveUser = this.users[i];
-    //   if (user.email == saveUser.email) {
-    //     return;
-    //   }
-    // }
+    if (this.duplicated) {
+      this.userForm.get('email')?.markAsDirty();
+      return;
+    }
     let result = '';
     if (this.user) {
       user["lastChangeDate"] = new Date(Date.now()).toLocaleString();
