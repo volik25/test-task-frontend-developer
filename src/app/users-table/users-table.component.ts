@@ -62,14 +62,13 @@ export class UsersTableComponent implements OnInit {
     const modal = this.modalService.open(UserFormComponent, { centered: true });
     modal.componentInstance.user = user;
     modal.result.then(res => {
-      console.log(res);
       this.savedUsers = res.data;
       this.showedUsers = res.data;
       this._alert.next({
         type: 'success',
         message: res.message
       })
-    })
+    }, (error) => {})
   }
 
   public deleteUser(i: number) {

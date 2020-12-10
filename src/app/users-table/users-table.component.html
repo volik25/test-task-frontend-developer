@@ -2,7 +2,7 @@
     <div class="col-md-4 d-flex justify-content-center align-items-center">
         <button class="btn btn-primary" (click)="modalOpen()">Добавить пользователя</button>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-4 mt-2 mt-sm-0">
         <label for="statusFilter">Фильтрация по статусу</label>
         <select [formControl]="statusControl" class="form-control" id="statusFilter">
             <option value="allUsers">Все клиенты</option>
@@ -14,33 +14,35 @@
         <input class="form-control" [formControl]="searchControl" id="search" placeholder="Почта/Номер телефона">
     </div>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">#</th>
-            <th *ngFor="let header of headers" scope="col">{{header}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of showedUsers; index as i">
-            <td>
-                <button class="btn btn-link far fa-edit" (click)="modalOpen(user)"></button>
-                <button class="btn btn-danger far fa-trash-alt" (click)="deleteUser(i)"></button>
-            </td>
-            <th scope="row">{{ i + 1 }}</th>
-            <td>{{user.email}}</td>
-            <td>{{user.password}}</td>
-            <td>{{user.phone}}</td>
-            <td>{{user.lastName}}</td>
-            <td>{{user.firstName}}</td>
-            <td>{{user.middleName ? user.middleName : 'Не указано'}}</td>
-            <td>{{user.status | StatusesPipe}}</td>
-            <td>{{user.createDate}}</td>
-            <td>{{user.lastChangeDate}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-content w-100">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">#</th>
+                <th *ngFor="let header of headers" scope="col">{{header}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of showedUsers; index as i">
+                <td>
+                    <button class="btn btn-link far fa-edit" (click)="modalOpen(user)"></button>
+                    <button class="btn btn-danger far fa-trash-alt" (click)="deleteUser(i)"></button>
+                </td>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{user.email}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.middleName ? user.middleName : 'Не указано'}}</td>
+                <td>{{user.status | StatusesPipe}}</td>
+                <td>{{user.createDate}}</td>
+                <td>{{user.lastChangeDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="showedUsers.length === 0">
     <h3>Пользователей нет</h3>

@@ -44,15 +44,20 @@ export class UserFormComponent implements OnInit {
       status: [null, Validators.required]
     })
     this.userForm.get('email')?.valueChanges.subscribe(value => {
-      for (let i = 0; i < this.users.length; i++) {
-        const user = this.users[i];
-        if ((user.email.indexOf(value) +1) && user.email != this.user?.email) {
-          this.duplicated = true;
-          break;
+      if (value) {
+        for (let i = 0; i < this.users.length; i++) {
+          const user = this.users[i];
+          if ((user.email.indexOf(value) +1) && user.email != this.user?.email) {
+            this.duplicated = true;
+            break;
+          }
+          else{
+            this.duplicated = false;
+          }
         }
-        else{
-          this.duplicated = false;
-        }
+      }
+      else {
+        this.duplicated = false;
       }
     })
   }
